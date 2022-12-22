@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/presentation/screens/main_page.dart';
+import 'package:quiz_app/presentation/screens/main_screen.dart';
 import 'package:quiz_app/internal/injection_container.dart' as di;
+
+import 'base/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +19,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Quiz Application',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        fontFamily: 'Roboto',
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+         primary: mainColor,
+
+         secondary: Colors.white
+        )
       ),
       home: MainPage());
   }
