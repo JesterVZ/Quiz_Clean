@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_app/base/widgets/base_screen.dart';
 
+import '../../../base/colors.dart';
+import '../../../base/routes.dart';
 import '../../widgets/UI/gradient_button.dart';
+import '../../widgets/UI/timer.dart';
 
 class HomeTab extends StatefulWidget{
   const HomeTab({super.key});
@@ -53,7 +57,21 @@ class _HomeTab extends State<HomeTab>{
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 24, right: 24),
-                  child: Column(children: [
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 9, bottom: 14),
+                        child: Text("The quiz ends in", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w100, color: unselectedColor))),
+                    Row(
+                      children: [
+                        TimerBlock(time: "7", part: "hours"),
+                        const Spacer(),
+                        TimerBlock(time: "30", part: "minutes"),
+                        const Spacer(),
+                        TimerBlock(time: "30", part: "seconts"),
+                      ],
+                    ),
                     Container(
                       margin: const EdgeInsets.only(top: 46),
                       child: GradientButton(
@@ -64,7 +82,9 @@ class _HomeTab extends State<HomeTab>{
                       ),
                       height: 47,
                       borderRadius: BorderRadius.circular(63),
-                      onPressed: (){},
+                      onPressed: (){
+                          Provider.of<GlobalKey<NavigatorState>>(context, listen: false).currentState!.pushNamed(routeQuiz);
+                      },
                       width: MediaQuery.of(context)!.size.width,
                       child: const Text("Play quiz now", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold))),
                     )

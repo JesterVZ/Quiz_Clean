@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/base/widgets/base_screen.dart';
 import 'package:quiz_app/presentation/screens/tabs/feed_tab.dart';
 import 'package:quiz_app/presentation/screens/tabs/home_tab.dart';
 import 'package:quiz_app/presentation/screens/tabs/profile_tab.dart';
@@ -10,7 +8,7 @@ import 'package:quiz_app/presentation/widgets/navigators/TabNavigator.dart';
 import '../../base/enums/TabItems.dart';
 
 class MainPage extends StatefulWidget{
-  const MainPage({super.key});
+  MainPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _MainPage();
@@ -48,6 +46,7 @@ class _MainPage extends State<MainPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: IndexedStack(
         index: _currentTab.index,
         children: [

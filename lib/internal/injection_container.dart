@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:quiz_app/core/platform/network_info.dart';
@@ -8,6 +9,8 @@ import 'package:quiz_app/data/repositories/get_question_repository_impl.dart';
 import 'package:quiz_app/domain/repositories/get_questions_repository.dart';
 import 'package:quiz_app/domain/usecases/get_questions_usecase.dart';
 import 'package:quiz_app/presentation/bloc/get_questions/get_questions_bloc.dart';
+import 'package:quiz_app/presentation/screens/main_screen.dart';
+import 'package:quiz_app/presentation/screens/quiz_screen.dart';
 
 import '../base/http/HttpClient.dart';
 
@@ -21,5 +24,4 @@ Future<void> startup() async{
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
   locator.registerLazySingleton<ApiClient>(() => ApiClient());
   locator.registerLazySingleton(() => InternetConnectionChecker());
-
 }
