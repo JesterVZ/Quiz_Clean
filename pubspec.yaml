@@ -40,6 +40,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   auto_route: ^5.0.4
   provider: ^6.0.5
+  flutter_svg: ^1.1.6
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -54,6 +55,7 @@ dev_dependencies:
 flutter:
   assets:
     - asstes/coins.png
+    - asstes/back.svg
   uses-material-design: true
   fonts:
     - family: Roboto

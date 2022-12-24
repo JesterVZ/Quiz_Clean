@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class GradientButton<T extends Widget, G extends Gradient> extends StatelessWidget{
   final T child;
-  final G gradient;
+  final G? gradient;
   final BorderRadius borderRadius;
   final double width;
   final double height;
@@ -11,7 +11,7 @@ class GradientButton<T extends Widget, G extends Gradient> extends StatelessWidg
 
   GradientButton({Key? key,
     required this.child,
-    required this.gradient,
+    this.gradient,
     required this.width,
     required this.height,
     required this.onPressed,
@@ -21,7 +21,11 @@ class GradientButton<T extends Widget, G extends Gradient> extends StatelessWidg
     return Container(
       width: width,
       height: 48,
-      decoration: BoxDecoration(borderRadius: borderRadius, gradient: gradient, boxShadow: const [
+      decoration: BoxDecoration(borderRadius: borderRadius, gradient: gradient ?? const LinearGradient(
+          colors: [Color(0xFF0185FF), Color(0xFF6324CA)],
+          begin: Alignment.centerRight,
+          end: Alignment.centerLeft
+      ), boxShadow: const [
         BoxShadow(
           color: Colors.grey,
           offset: Offset(0.0, 1.5),
