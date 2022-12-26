@@ -5,9 +5,9 @@ class Question extends Equatable{
   int id;
   String question;
   String? description;
-  List answers;
+  Map answers;
   String? multiple_correct_answers;
-  List correct_answers;
+  Map correct_answers;
   String correct_answer;
   String? explanation;
   String? tip;

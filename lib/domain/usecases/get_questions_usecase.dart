@@ -4,6 +4,7 @@ import 'package:quiz_app/core/error/failures.dart';
 import 'package:quiz_app/core/usecases/usecase.dart';
 import 'package:quiz_app/domain/entities/question/question.dart';
 
+import '../../data/models/question/question_model.dart';
 import '../repositories/get_questions_repository.dart';
 
 class GetQuestionUseCase implements UseCase<List<Question>, Params>{
@@ -11,7 +12,7 @@ class GetQuestionUseCase implements UseCase<List<Question>, Params>{
   GetQuestionUseCase(this.repository);
 
   @override
-  Future<Either<Failure, List<Question>>> call(Params params) async {
+  Future<Either<Failure, List<QuestionModel>>> call(Params params) async {
     return await repository.getQuestions(params);
   }
 

@@ -6,10 +6,10 @@ class QuestionModel extends Question{
   factory QuestionModel.fromJson(Map<String, dynamic> map){
     return QuestionModel(
         id: map['id'],
-        question: map['question'],
+        question: map['question'] ?? "",
         answers: map['answers'],
         correct_answers: map['correct_answers'],
-        correct_answer: map['correct_answer'],
-        difficulty: map['difficulty']);
+        correct_answer: map['correct_answer'] ?? "",
+        difficulty: map['difficulty'] ?? "");
   }
 }

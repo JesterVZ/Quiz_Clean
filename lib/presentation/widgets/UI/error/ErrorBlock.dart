@@ -33,7 +33,7 @@ class ErrorBlock extends StatelessWidget{
                     //Provider.of<GlobalKey<NavigatorState>>(context, listen: false).currentState!.pushNamed(routeQuiz);
                   },
                   width: MediaQuery.of(context).size.width,
-                  child: const Text("Play quiz now", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold))),
+                  child: const Text("Try again", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold))),
             )
           ],
         ),

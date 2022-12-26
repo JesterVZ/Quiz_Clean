@@ -12,18 +12,18 @@ import 'package:quiz_app/base/enums/Methods.dart';
 
 abstract class QuestionRemoteDataSource{
   ///Calls the endpoint
-  Future<List<Question>> getQuestions(Params params);
+  Future<List<QuestionModel>> getQuestions(Params params);
 }
 
 class QuestionRemoteDataSourceImpl implements QuestionRemoteDataSource{
   QuestionRemoteDataSourceImpl({this.httpClient});
   ApiClient? httpClient;
   @override
-  Future<List<Question>> getQuestions(Params params) async {
+  Future<List<QuestionModel>> getQuestions(Params params) async {
     Response response = await httpClient!.sendRequest(Method.GET, null, params);
     if(response.statusCode == 200){
-      List<Question> result = [];
-      throw ServerException();
+      List<QuestionModel> result = [];
+      //throw ServerException();
       for(int i = 0; i < response.data.length; i++){
         result.add(QuestionModel.fromJson(response.data[i]));
       }
