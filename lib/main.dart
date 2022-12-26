@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:quiz_app/presentation/screens/main_screen.dart';
 import 'package:quiz_app/internal/injection_container.dart' as di;
 import 'package:quiz_app/presentation/screens/quiz_screen.dart';
+import 'package:quiz_app/presentation/widgets/routes/CustomPageRoute.dart';
 
 import 'base/colors.dart';
 import 'base/routes.dart';
@@ -38,12 +39,13 @@ class MyApp extends StatelessWidget {
         switch(settings.name){
           case routeHome:
             page = MainPage();
-            break;
+            return MaterialPageRoute<dynamic>(builder: (context) => page, settings: settings);
           case routeQuiz:
             page = QuizScreen();
-            break;
+            return CustomPageRoute(page: page);
         }
-        return MaterialPageRoute<dynamic>(builder: (context) => page, settings: settings);
+
+        //return MaterialPageRoute<dynamic>(builder: (context) => page, settings: settings);
       },
     ));
 

@@ -12,33 +12,47 @@ class QuestionBlock extends StatefulWidget{
   State<StatefulWidget> createState() => QuestionBlockState();
 }
 
-class QuestionBlockState extends State<QuestionBlock>{
+class QuestionBlockState extends State<QuestionBlock> with SingleTickerProviderStateMixin{
+  late AnimationController animationController;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    animationController = AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+    animation = Tween<double>(begin: 0, end: 1).animate(animationController)..addListener(() {
+      setState(() {
+
+      });
+    });
+    animationController.forward();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Opacity(opacity: animation.value, child: Container(
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(21)
       ),
       child: Padding(
-        padding: EdgeInsets.all(27),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(widget.number.toString()),
-        Text(widget.questionModel.question),
-        Container(
-          margin: const EdgeInsets.only(top: 30),
+          padding: EdgeInsets.all(27),
           child: Column(
-            children: _buildAnswers()
-          ),
-        )
-        
-      ],
-    )),
-    );
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.number.toString()),
+              Text(widget.questionModel.question),
+              Container(
+                margin: const EdgeInsets.only(top: 30),
+                child: Column(
+                    children: _buildAnswers()
+                ),
+              )
+
+            ],
+          )),
+    ));
   }
 
   List<Widget> _buildAnswers(){

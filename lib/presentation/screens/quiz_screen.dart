@@ -46,9 +46,9 @@ class _QuizScreen extends State<QuizScreen> {
             }
             if (state.questions != null && state.questions!.isNotEmpty) {
               for (int i = 0; i < state.questions!.length; i++) {
-                questions.add(QuestionBlock(questionModel: state.questions![i], number: i++));
+                questions.add(QuestionBlock(questionModel: state.questions![i], number: (i+1)));
               }
-              content = Column(children: questions,);
+              content = Column(children: [questions[0]],);
             }
             return Stack(
               children: [

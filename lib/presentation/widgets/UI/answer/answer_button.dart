@@ -10,17 +10,29 @@ class AnswerButton extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: borderColor),
         borderRadius: BorderRadius.circular(30),
-        
+
       ),
-      child: Row(children: [
-        Text(answerLetter),
-        Text(answer)
-      ]),
+      child: Material(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.transparent,
+        child: InkWell(
+            borderRadius: BorderRadius.circular(30),
+          onTap: (){},
+          child: Container(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Flexible(child: Text(answer),),
+              ],
+            ),
+          )
+        ),
+      ),
     );
   }
 }
