@@ -10,25 +10,24 @@ import 'get_questions_state.dart';
 
 part 'get_questions_event.dart';
 
-class GetQuestionsBloc extends Bloc<GetQuestionsEvent, GetQuestionsState> {
-  GetQuestionsBloc({this.getQuestionUseCase}) : super(GetQuestionsState.initial());
+class GetQuestionsBloc extends Bloc<QuestionsEvent, GetQuestionsState> {
+  GetQuestionsBloc({this.getQuestionUseCase}) : super(GetQuestionsState.initial()){
+    on((GetQuestionsEvent event, Emitter<GetQuestionsState> emit) async{
+      emit.call(state.copy(loading: true));
+      final questions = await getQuestionUseCase!(Params(difficulty: event.difficulty));
+      questions.fold(
+              (failure) {
+                emit.call(state.copy(loading: false, error: _mapFailureToMessage(failure)));
+              },
+              (list) {
+                emit.call(state.copy(loading: false, questions: list));
+              }
+      );
+    });
+  }
   GetQuestionUseCase? getQuestionUseCase;
 
-  @override
-  Stream<GetQuestionsState> mapEventToState(GetQuestionsEvent event) async*{
-    if(event is GetQuestionsEvent){
-      yield* _handleGetQuestions(event);
-    }
-  }
 
-  Stream<GetQuestionsState> _handleGetQuestions(GetQuestionsEvent event) async*{
-    yield state.copy(loading: true);
-    final questions = await getQuestionUseCase!(Params(difficulty: event.difficulty));
-    yield questions.fold(
-        (failure) => state.copy(error: _mapFailureToMessage(failure)),
-        (list) => state.copy(loading: true, questions: list));
-
-  }
 
   String _mapFailureToMessage(Failure failure){
     switch(failure.runtimeType){

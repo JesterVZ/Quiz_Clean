@@ -23,8 +23,9 @@ class QuestionRemoteDataSourceImpl implements QuestionRemoteDataSource{
     Response response = await httpClient!.sendRequest(Method.GET, null, params);
     if(response.statusCode == 200){
       List<Question> result = [];
+      throw ServerException();
       for(int i = 0; i < response.data.length; i++){
-        result.add(QuestionModel.fromJson(json.decode(response.data)));
+        result.add(QuestionModel.fromJson(response.data[i]));
       }
       return result;
     } else {

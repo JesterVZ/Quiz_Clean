@@ -17,7 +17,8 @@ class ApiClient{
   Future<Response> sendRequest(Method method, String? path, Params params) async{
     switch(method){
       case Method.GET:
-        return await _apiClient.get(path ?? "https://quizapi.io/api/v1/questions?apiKey=$key&limit=10&difficulty=${params.difficulty}");
+        String link = "https://quizapi.io/api/v1/questions?apiKey=$key&limit=10&difficulty=${params.difficulty}";
+        return await _apiClient.get(link);
       case Method.POST:
         return await _apiClient.post(path ?? "https://quizapi.io/api/v1/questions?apiKey=$key&limit=10&difficulty=${params.difficulty}");
     }
