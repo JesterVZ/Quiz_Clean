@@ -34,8 +34,10 @@ class GradientButton<T extends Widget, G extends Gradient> extends StatelessWidg
 
       ]),
       child: Material(
+        borderRadius: borderRadius,
         color: Colors.transparent,
         child: InkWell(
+          borderRadius: borderRadius,
             onTap: (){onPressed.call();},
             child: Center(
               child: child,
