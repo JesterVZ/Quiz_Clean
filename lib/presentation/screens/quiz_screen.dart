@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_app/base/widgets/base_screen.dart';
 import 'package:quiz_app/data/models/question/question_model.dart';
 import 'package:quiz_app/internal/injection_container.dart';
@@ -20,10 +21,10 @@ class _QuizScreen extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      body: Padding(
-        padding: const EdgeInsets.only(left: 14, right: 14),
-        child: buildBody(context),
-      ));
+        body: Padding(
+      padding: const EdgeInsets.only(left: 14, right: 14),
+      child: buildBody(context),
+    ));
   }
 
   BlocProvider<GetQuestionsBloc> buildBody(BuildContext context) {
@@ -31,6 +32,8 @@ class _QuizScreen extends State<QuizScreen> {
     List<QuestionBlock> questions = [];
     Widget content = Container();
     bool isLoading = false;
+    int questionIndex = 0;
+
     return BlocProvider(
         create: (context) => bloc,
         child: BlocBuilder<GetQuestionsBloc, GetQuestionsState>(
@@ -42,38 +45,51 @@ class _QuizScreen extends State<QuizScreen> {
               isLoading = false;
             }
             if (state.error != null) {
-              content =  ErrorBlock(errorText: state.error!);
+              content = ErrorBlock(errorText: state.error!);
             }
             if (state.questions != null && state.questions!.isNotEmpty) {
               for (int i = 0; i < state.questions!.length; i++) {
-                questions.add(QuestionBlock(questionModel: state.questions![i], number: (i+1)));
+                questions.add(QuestionBlock(
+                    questionModel: state.questions![i], number: (i + 1)));
               }
-              content = Column(children: [questions[0]],);
+              content = Column(
+                children: [questions[questionIndex]],
+              );
             }
-            return Stack(
-              children: [
-                Column(
-                  children: [
-                    Header(
-                      text: "Quiz"
-                    ),
-                    Expanded(child: SingleChildScrollView(child: content,))
-                    
-
-                  ],
-                ),
-                Visibility(
-                    visible: isLoading,
-                    child: const Center(
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ))
+            if (state.isCorrectAnswer == true) {
+              questionIndex++;
+            }
+            return MultiProvider(
+              providers: [
+                Provider(create: (context) => bloc),
+                Provider(
+                  create: (context) => questionIndex,
+                )
               ],
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      Header(text: "Quiz"),
+                      Expanded(
+                          child: SingleChildScrollView(
+                        child: content,
+                      ))
+                    ],
+                  ),
+                  Visibility(
+                      visible: isLoading,
+                      child: const Center(
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ))
+                ],
+              ),
             );
           },
         ));
