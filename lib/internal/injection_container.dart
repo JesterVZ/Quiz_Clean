@@ -11,7 +11,7 @@ import '../base/http/HttpClient.dart';
 
 final locator = GetIt.instance;
 
-Future<void> startup() async{
+Future<void> startup() async {
   locator.registerFactory(() => GetQuestionsBloc(getQuestionUseCase: locator()));
   locator.registerLazySingleton(() => GetQuestionUseCase(locator()));
   locator.registerLazySingleton<GetQuestionsRepository>(() => GetQuestionRepositoryImpl(remoteDataSource: locator(), networkInfo: locator()));

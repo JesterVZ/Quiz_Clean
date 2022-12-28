@@ -4,7 +4,7 @@ import 'package:quiz_app/presentation/widgets/UI/answer/answer_button.dart';
 
 import '../../../../data/models/question/question_model.dart';
 
-class QuestionBlock extends StatefulWidget{
+class QuestionBlock extends StatefulWidget {
   int number;
   QuestionModel questionModel;
   QuestionBlock({super.key, required this.questionModel, required this.number});
@@ -12,75 +12,55 @@ class QuestionBlock extends StatefulWidget{
   State<StatefulWidget> createState() => QuestionBlockState();
 }
 
-class QuestionBlockState extends State<QuestionBlock> with SingleTickerProviderStateMixin{
+class QuestionBlockState extends State<QuestionBlock>
+    with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
 
   @override
   void initState() {
-    animationController = AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
-    animation = Tween<double>(begin: 0, end: 1).animate(animationController)..addListener(() {
-      setState(() {
-
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
+    animation = Tween<double>(begin: 0, end: 1).animate(animationController)
+      ..addListener(() {
+        setState(() {});
       });
-    });
     animationController.forward();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Opacity(opacity: animation.value, child: Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(21)
-      ),
-      child: Padding(
-          padding: EdgeInsets.all(27),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(widget.number.toString()),
-              Text(widget.questionModel.question),
-              Container(
-                margin: const EdgeInsets.only(top: 30),
-                child: Column(
-                    children: _buildAnswers()
-                ),
-              )
-
-            ],
-          )),
-    ));
+    return Opacity(
+        opacity: animation.value,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(21)),
+          child: Padding(
+              padding: EdgeInsets.all(27),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.number.toString()),
+                  Text(widget.questionModel.question),
+                  Container(
+                    margin: const EdgeInsets.only(top: 30),
+                    child: Column(children: _buildAnswers()),
+                  )
+                ],
+              )),
+        ));
   }
 
-  List<Widget> _buildAnswers(){
+  List<Widget> _buildAnswers() {
     List<Widget> answers = [];
-    for(int i = 0; i < widget.questionModel.answers.length; i++){
-      if(widget.questionModel.answers.values.elementAt(i) != null){
-        answers.add(AnswerButton(answerLetter: _keyToLetter(widget.questionModel.answers.keys.elementAt(i)), answer: widget.questionModel.answers.values.elementAt(i)));
+    for (int i = 0; i < widget.questionModel.answers.length; i++) {
+      if (widget.questionModel.answers.values.elementAt(i) != null) {
+        final answerMap = widget.questionModel.answers.entries.elementAt(i);
+        answers.add(AnswerButton(answerMap: answerMap));
       }
-      
     }
     return answers;
-  }
-
-  String _keyToLetter(String key){
-    switch(key){
-      case "answer_a":
-      return "A";
-      case "answer_b":
-      return "B";
-      case "answer_C":
-      return "C";
-      case "answer_D":
-      return "D";
-      case "answer_E":
-      return "E";
-      case "answer_F":
-      return "F";
-    }
-    return "";
   }
 }
