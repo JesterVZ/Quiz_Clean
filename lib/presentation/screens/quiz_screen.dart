@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/base/widgets/base_screen.dart';
-import 'package:quiz_app/data/models/question/question_model.dart';
 import 'package:quiz_app/internal/injection_container.dart';
 import 'package:quiz_app/presentation/bloc/get_questions/get_questions_state.dart';
-import 'package:quiz_app/presentation/widgets/UI/error/ErrorBlock.dart';
 import 'package:quiz_app/presentation/widgets/UI/question/question_block.dart';
 
 import '../bloc/get_questions/get_questions_bloc.dart';
+import '../widgets/UI/error/Error_block.dart';
 import '../widgets/UI/header.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -17,7 +15,9 @@ class QuizScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _QuizScreen();
 }
 
-class _QuizScreen extends State<QuizScreen> with ChangeNotifier {
+class _QuizScreen extends State<QuizScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
@@ -26,6 +26,7 @@ class _QuizScreen extends State<QuizScreen> with ChangeNotifier {
       child: buildBody(context),
     ));
   }
+  
 
   BlocProvider<GetQuestionsBloc> buildBody(BuildContext context) {
     final bloc = locator<GetQuestionsBloc>()..add(GetQuestionsEvent("hard"));
@@ -108,6 +109,7 @@ class _QuizScreen extends State<QuizScreen> with ChangeNotifier {
     super.didChangeDependencies();
   }
 }
+
 
 class QuestionIndex extends ChangeNotifier {
   int index = 0;

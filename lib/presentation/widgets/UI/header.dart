@@ -22,8 +22,7 @@ class Header extends StatelessWidget{
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: (){
-                    Provider.of<GlobalKey<NavigatorState>>(context, listen: false).currentState!.pop(context);
-
+                    context.read<GlobalKey<NavigatorState>>().currentState!.pop(context);
                   },
                   child: SvgPicture.asset("asstes/back.svg"),
                 ),

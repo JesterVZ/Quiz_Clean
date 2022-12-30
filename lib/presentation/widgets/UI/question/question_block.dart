@@ -42,8 +42,8 @@ class QuestionBlockState extends State<QuestionBlock>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.number.toString()),
-                  Text(widget.questionModel.question),
+                  Text(widget.number.toString(), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+                  Text(widget.questionModel.question, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   Container(
                     margin: const EdgeInsets.only(top: 30),
                     child: Column(children: _buildAnswers()),

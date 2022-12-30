@@ -26,7 +26,6 @@ class AnswerButton extends StatelessWidget {
         child: InkWell(
             borderRadius: BorderRadius.circular(30),
             onTap: () {
-              //int questionIndex = Provider.of<int>(context, listen: false);
               int questionIndex = context.read<QuestionIndex>().index;
               context
                   .read<GetQuestionsBloc>()
@@ -37,7 +36,7 @@ class AnswerButton extends StatelessWidget {
               child: Row(
                 children: [
                   Flexible(
-                    child: Text(answerMap.value),
+                    child: Text(answerMap.value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),

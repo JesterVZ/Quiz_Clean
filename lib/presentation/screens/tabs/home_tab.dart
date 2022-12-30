@@ -18,6 +18,8 @@ class HomeTab extends StatefulWidget{
 class _HomeTab extends State<HomeTab>{
   @override
   Widget build(BuildContext context) {
+
+    double imageScale = MediaQuery.of(context).size.height / MediaQuery.of(context).size.height * 0.1;
     return BaseScreen(
         body: Stack(
           children: [
@@ -28,7 +30,7 @@ class _HomeTab extends State<HomeTab>{
                     alignment: Alignment.centerRight,
                     child: Container(
                         margin: EdgeInsets.only(right: 42, top: 22),
-                        child: Image.asset("asstes/coins.png")
+                        child: Image.asset("asstes/coins.png", scale: imageScale,)
                     ),
                   ),
                   Padding(
@@ -82,7 +84,7 @@ class _HomeTab extends State<HomeTab>{
                           height: 47,
                           borderRadius: BorderRadius.circular(63),
                           onPressed: (){
-                            Provider.of<GlobalKey<NavigatorState>>(context, listen: false).currentState!.pushNamed(routeQuiz);
+                            context.read<GlobalKey<NavigatorState>>().currentState!.pushNamed(routeQuiz);
                           },
                           width: MediaQuery.of(context).size.width,
                           child: const Text("Play quiz now", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold))),
