@@ -17,7 +17,7 @@ class QuizScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _QuizScreen();
 }
 
-class _QuizScreen extends State<QuizScreen> {
+class _QuizScreen extends State<QuizScreen> with ChangeNotifier {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
@@ -32,7 +32,9 @@ class _QuizScreen extends State<QuizScreen> {
     List<QuestionBlock> questions = [];
     Widget content = Container();
     bool isLoading = false;
-    int questionIndex = 0;
+    QuestionIndex questionIndex = QuestionIndex();
+
+    List<GlobalKey<QuestionBlockState>> keys = [];
 
     return BlocProvider(
         create: (context) => bloc,
@@ -49,20 +51,26 @@ class _QuizScreen extends State<QuizScreen> {
             }
             if (state.questions != null && state.questions!.isNotEmpty) {
               for (int i = 0; i < state.questions!.length; i++) {
+                keys.add(GlobalKey<QuestionBlockState>());
                 questions.add(QuestionBlock(
-                    questionModel: state.questions![i], number: (i + 1)));
+                    key: keys[i],
+                    questionModel: state.questions![i],
+                    number: (i + 1)));
               }
               content = Column(
-                children: [questions[questionIndex]],
+                children: [questions[questionIndex.index]],
               );
             }
             if (state.isCorrectAnswer == true) {
-              questionIndex++;
-            }
+              questionIndex.index++;
+              content = Column(
+                children: [questions[questionIndex.index]],
+              );
+            } else if (state.isCorrectAnswer == false) {}
             return MultiProvider(
               providers: [
                 Provider(create: (context) => bloc),
-                Provider(
+                ChangeNotifierProvider(
                   create: (context) => questionIndex,
                 )
               ],
@@ -98,5 +106,14 @@ class _QuizScreen extends State<QuizScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+  }
+}
+
+class QuestionIndex extends ChangeNotifier {
+  int index = 0;
+
+  plus() {
+    index++;
+    notifyListeners();
   }
 }

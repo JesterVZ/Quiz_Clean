@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_app/presentation/screens/quiz_screen.dart';
 
 import '../../../../base/colors.dart';
 import '../../../../internal/injection_container.dart';
@@ -25,9 +26,10 @@ class AnswerButton extends StatelessWidget {
         child: InkWell(
             borderRadius: BorderRadius.circular(30),
             onTap: () {
-              int questionIndex = Provider.of<int>(context, listen: false);
-
-              Provider.of<GetQuestionsBloc>(context, listen: false)
+              //int questionIndex = Provider.of<int>(context, listen: false);
+              int questionIndex = context.read<QuestionIndex>().index;
+              context
+                  .read<GetQuestionsBloc>()
                   .add(CompareAnswersEvent(answerMap.key, questionIndex));
             },
             child: Container(
