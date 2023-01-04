@@ -14,5 +14,6 @@ class GetQuestionsEvent extends QuestionsEvent {
 class CompareAnswersEvent extends QuestionsEvent {
   String answer_key; //ключ вопроса
   int answer_index; //номер вопроса
+  //Params params;
   CompareAnswersEvent(this.answer_key, this.answer_index);
 }

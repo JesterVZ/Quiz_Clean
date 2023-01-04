@@ -5,19 +5,21 @@ import 'package:quiz_app/base/widgets/base_screen.dart';
 import 'package:quiz_app/internal/injection_container.dart';
 import 'package:quiz_app/presentation/bloc/get_questions/get_questions_state.dart';
 import 'package:quiz_app/presentation/widgets/UI/question/question_block.dart';
+import 'package:quiz_app/presentation/widgets/UI/result/result_block.dart';
 
+import '../../domain/usecases/get_questions_usecase.dart';
 import '../bloc/get_questions/get_questions_bloc.dart';
 import '../widgets/UI/error/Error_block.dart';
 import '../widgets/UI/header.dart';
 
 class QuizScreen extends StatefulWidget {
+  Params params;
+  QuizScreen({required this.params});
   @override
   State<StatefulWidget> createState() => _QuizScreen();
 }
 
 class _QuizScreen extends State<QuizScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
@@ -26,7 +28,6 @@ class _QuizScreen extends State<QuizScreen> {
       child: buildBody(context),
     ));
   }
-  
 
   BlocProvider<GetQuestionsBloc> buildBody(BuildContext context) {
     final bloc = locator<GetQuestionsBloc>()..add(GetQuestionsEvent("hard"));
@@ -67,7 +68,9 @@ class _QuizScreen extends State<QuizScreen> {
               content = Column(
                 children: [questions[questionIndex.index]],
               );
-            } else if (state.isCorrectAnswer == false) {}
+            } else if (state.isCorrectAnswer == false) {
+              content = const ResultBlock();
+            }
             return MultiProvider(
               providers: [
                 Provider(create: (context) => bloc),
@@ -109,7 +112,6 @@ class _QuizScreen extends State<QuizScreen> {
     super.didChangeDependencies();
   }
 }
-
 
 class QuestionIndex extends ChangeNotifier {
   int index = 0;

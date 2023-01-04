@@ -7,7 +7,7 @@ import 'package:quiz_app/domain/entities/question/question.dart';
 import '../../data/models/question/question_model.dart';
 import '../repositories/get_questions_repository.dart';
 
-class GetQuestionUseCase implements UseCase<List<Question>, Params>{
+class GetQuestionUseCase implements UseCase<List<Question>, Params> {
   final GetQuestionsRepository repository;
   GetQuestionUseCase(this.repository);
 
@@ -15,13 +15,13 @@ class GetQuestionUseCase implements UseCase<List<Question>, Params>{
   Future<Either<Failure, List<QuestionModel>>> call(Params params) async {
     return await repository.getQuestions(params);
   }
-
 }
 
-class Params extends Equatable{
-  final String difficulty;
-  const Params({required this.difficulty});
+class Params extends Equatable {
+  final String? difficulty;
+  final String? category;
+  const Params({this.difficulty, this.category});
 
   @override
-  List<Object?> get props => [difficulty];
+  List<Object?> get props => [difficulty, category];
 }

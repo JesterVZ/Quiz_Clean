@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/base/widgets/base_screen.dart';
@@ -6,7 +5,9 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../../base/colors.dart';
 import '../../../base/enums/categories.dart';
+import '../../../base/enums/difficulty.dart';
 import '../../../base/routes.dart';
+import '../../../domain/usecases/get_questions_usecase.dart';
 import '../../widgets/UI/dropdown.dart';
 import '../../widgets/UI/gradient_button.dart';
 import '../../widgets/UI/timer.dart';
@@ -20,6 +21,10 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTab extends State<HomeTab> {
   List categoryItemsList = [];
+  List difficultyItemsList = [];
+
+  String? selecredCategory;
+  String? selectedDifficulty;
 
   @override
   void initState() {
@@ -27,6 +32,12 @@ class _HomeTab extends State<HomeTab> {
       categoryItemsList.add({
         'label': categoryNames.values.elementAt(i),
         'value': categoryNames.keys.elementAt(i).toString()
+      });
+    }
+    for (int i = 0; i < difficultyNames.length; i++) {
+      difficultyItemsList.add({
+        'label': difficultyNames.values.elementAt(i),
+        'value': difficultyNames.keys.elementAt(i).toString()
       });
     }
     super.initState();
@@ -41,7 +52,8 @@ class _HomeTab extends State<HomeTab> {
             panel: _buildPanel(),
             collapsed: _buildCollapsed(),
             minHeight: 250,
-            body: _buildBold(),
+            maxHeight: 400,
+            body: _buildBody(),
             borderRadius: BorderRadius.circular(33)),
         Positioned(
           bottom: 40,
@@ -51,10 +63,13 @@ class _HomeTab extends State<HomeTab> {
                 height: 47,
                 borderRadius: BorderRadius.circular(63),
                 onPressed: () {
+                  final agrs = Params(
+                      category: selecredCategory,
+                      difficulty: selectedDifficulty);
                   context
                       .read<GlobalKey<NavigatorState>>()
                       .currentState!
-                      .pushNamed(routeQuiz);
+                      .pushNamed(routeQuiz, arguments: agrs);
                 },
                 width: MediaQuery.of(context).size.width - 48,
                 child: const Text("Play quiz now",
@@ -86,7 +101,7 @@ class _HomeTab extends State<HomeTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                margin: EdgeInsets.only(top: 9, bottom: 14),
+                margin: const EdgeInsets.only(top: 9, bottom: 14),
                 child: Text("The quiz ends in",
                     style: TextStyle(
                         fontSize: 15,
@@ -118,32 +133,54 @@ class _HomeTab extends State<HomeTab> {
             topRight: Radius.circular(33),
           )),
       child: Padding(
-        padding: const EdgeInsets.only(left: 24, right: 24),
+        padding: const EdgeInsets.only(left: 24, right: 24, top: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                margin: EdgeInsets.only(top: 9, bottom: 14),
-                child: Text("Settings",
+              margin: const EdgeInsets.only(bottom: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Category",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w100,
+                          color: unselectedColor)),
+                  Dropdown(
+                    value: selecredCategory,
+                    dropdownList: categoryItemsList,
+                  )
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Difficulty",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w100,
-                        color: unselectedColor))),
-            Dropdown(
-              dropdownList: categoryItemsList,
-            ),
+                        color: unselectedColor)),
+                Dropdown(
+                  value: selectedDifficulty,
+                  dropdownHeight: 120,
+                  dropdownList: difficultyItemsList,
+                )
+              ],
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBold() {
+  Widget _buildBody() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Align(
         alignment: Alignment.centerRight,
         child: Container(
-            margin: EdgeInsets.only(right: 42, top: 22),
+            margin: const EdgeInsets.only(right: 42, top: 22),
             child: Image.asset(
               "asstes/coins.png",
               scale: 0.8,
@@ -155,7 +192,7 @@ class _HomeTab extends State<HomeTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                margin: EdgeInsets.only(bottom: 10),
+                margin: const EdgeInsets.only(bottom: 10),
                 child: const Text(
                   "Super quiz",
                   style: TextStyle(
@@ -163,14 +200,13 @@ class _HomeTab extends State<HomeTab> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 )),
-            Container(
-                child: const Text(
+            const Text(
               "Play super quiz",
               style: TextStyle(
                   fontSize: 15,
                   color: Colors.white,
                   fontWeight: FontWeight.w100),
-            ))
+            )
           ],
         ),
       ),

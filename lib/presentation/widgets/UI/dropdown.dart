@@ -1,16 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cool_dropdown/cool_dropdown.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../base/colors.dart';
 
 class Dropdown extends StatefulWidget {
   List dropdownList;
+  double? dropdownHeight;
+  String? value;
 
-  Dropdown({
-    Key? key,
-    required this.dropdownList,
-  }) : super(key: key);
+  Dropdown(
+      {Key? key,
+      required this.dropdownList,
+      this.dropdownHeight,
+      required this.value})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() => _DropdownStae();
 }
@@ -19,6 +24,7 @@ class _DropdownStae extends State<Dropdown> {
   @override
   Widget build(BuildContext context) {
     return CoolDropdown(
+      dropdownHeight: widget.dropdownHeight ?? 200,
       resultBD: BoxDecoration(
           borderRadius: BorderRadius.circular(70), color: dropdownColor),
       dropdownBD: BoxDecoration(
@@ -34,7 +40,10 @@ class _DropdownStae extends State<Dropdown> {
       dropdownList: widget.dropdownList,
       defaultValue: widget.dropdownList[0],
       onChange: (value) {
-        print(value);
+        if (kDebugMode) {
+          print(value);
+          widget.value = value;
+        }
       },
     );
   }

@@ -1,11 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:quiz_app/core/error/exceptions.dart';
 
 import '../../base/http/HttpClient.dart';
-import '../../domain/entities/question/question.dart';
 import '../../domain/usecases/get_questions_usecase.dart';
 import '../models/question/question_model.dart';
 import 'package:quiz_app/base/enums/methods.dart';
