@@ -47,7 +47,8 @@ class GetQuestionsBloc extends Bloc<QuestionsEvent, GetQuestionsState> {
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case ServerFailure:
-        return "Server error";
+        final fail = failure as ServerFailure;
+        return "Server error ${fail.message ?? ""}";
       case CacheFailure:
         return "Local cache error";
     }

@@ -22,12 +22,12 @@ class GetQuestionRepositoryImpl implements GetQuestionsRepository {
         final remoteQuestion = await remoteDataSource.getQuestions(params);
         return Right(remoteQuestion);
       } on ServerException {
-        return Left(ServerFailure());
+        return Left(ServerFailure("Unhandled server exception"));
       } catch (e) {
-        return Left(ServerFailure());
+        return Left(ServerFailure(e.toString()));
       }
     } else {
-      return Left(ServerFailure());
+      return Left(ServerFailure("No internet connection"));
     }
   }
 }
