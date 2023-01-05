@@ -14,8 +14,7 @@ class GetQuestionsBloc extends Bloc<QuestionsEvent, GetQuestionsState> {
       : super(GetQuestionsState.initial()) {
     on((GetQuestionsEvent event, Emitter emit) async {
       emit.call(state.copy(loading: true));
-      final questions =
-          await getQuestionUseCase!(Params(difficulty: event.difficulty));
+      final questions = await getQuestionUseCase!(event.params);
       questions.fold((failure) {
         emit.call(
             state.copy(loading: false, error: _mapFailureToMessage(failure)));

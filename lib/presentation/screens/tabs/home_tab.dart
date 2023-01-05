@@ -31,13 +31,13 @@ class _HomeTab extends State<HomeTab> {
     for (int i = 0; i < categoryNames.length; i++) {
       categoryItemsList.add({
         'label': categoryNames.values.elementAt(i),
-        'value': categoryNames.keys.elementAt(i).toString()
+        'value': categoryNames.keys.elementAt(i).name
       });
     }
     for (int i = 0; i < difficultyNames.length; i++) {
       difficultyItemsList.add({
         'label': difficultyNames.values.elementAt(i),
-        'value': difficultyNames.keys.elementAt(i).toString()
+        'value': difficultyNames.keys.elementAt(i).name
       });
     }
     super.initState();
@@ -148,7 +148,7 @@ class _HomeTab extends State<HomeTab> {
                           fontWeight: FontWeight.w100,
                           color: unselectedColor)),
                   Dropdown(
-                    value: selecredCategory,
+                    onChange: (value) => selecredCategory = value['value'],
                     dropdownList: categoryItemsList,
                   )
                 ],
@@ -163,7 +163,7 @@ class _HomeTab extends State<HomeTab> {
                         fontWeight: FontWeight.w100,
                         color: unselectedColor)),
                 Dropdown(
-                  value: selectedDifficulty,
+                  onChange: (value) => selectedDifficulty = value['value'],
                   dropdownHeight: 120,
                   dropdownList: difficultyItemsList,
                 )

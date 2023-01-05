@@ -8,19 +8,25 @@ import '../../../base/colors.dart';
 class Dropdown extends StatefulWidget {
   List dropdownList;
   double? dropdownHeight;
-  String? value;
+  Function(dynamic value) onChange;
 
   Dropdown(
       {Key? key,
       required this.dropdownList,
       this.dropdownHeight,
-      required this.value})
+      required this.onChange})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => _DropdownStae();
 }
 
 class _DropdownStae extends State<Dropdown> {
+  @override
+  void initState() {
+    widget.onChange.call(widget.dropdownList[0]);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CoolDropdown(
@@ -39,12 +45,7 @@ class _DropdownStae extends State<Dropdown> {
       resultWidth: MediaQuery.of(context).size.width,
       dropdownList: widget.dropdownList,
       defaultValue: widget.dropdownList[0],
-      onChange: (value) {
-        if (kDebugMode) {
-          print(value);
-          widget.value = value;
-        }
-      },
+      onChange: (value) => widget.onChange.call(value),
     );
   }
 }

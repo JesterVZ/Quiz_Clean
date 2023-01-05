@@ -9,22 +9,25 @@ import 'package:quiz_app/domain/usecases/get_questions_usecase.dart';
 import '../../core/platform/network_info.dart';
 import '../models/question/question_model.dart';
 
-class GetQuestionRepositoryImpl implements GetQuestionsRepository{
+class GetQuestionRepositoryImpl implements GetQuestionsRepository {
   final QuestionRemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
-  GetQuestionRepositoryImpl({required this.remoteDataSource, required this.networkInfo});
+  GetQuestionRepositoryImpl(
+      {required this.remoteDataSource, required this.networkInfo});
   @override
-  Future<Either<Failure, List<QuestionModel>>> getQuestions(Params params) async{
-    if(await networkInfo.isConnected){
-      try{
+  Future<Either<Failure, List<QuestionModel>>> getQuestions(
+      Params params) async {
+    if (await networkInfo.isConnected) {
+      try {
         final remoteQuestion = await remoteDataSource.getQuestions(params);
         return Right(remoteQuestion);
-      }on ServerException{
+      } on ServerException {
+        return Left(ServerFailure());
+      } catch (e) {
         return Left(ServerFailure());
       }
-    }else {
+    } else {
       return Left(ServerFailure());
     }
   }
-  
 }

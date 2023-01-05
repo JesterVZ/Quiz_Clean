@@ -30,7 +30,8 @@ class _QuizScreen extends State<QuizScreen> {
   }
 
   BlocProvider<GetQuestionsBloc> buildBody(BuildContext context) {
-    final bloc = locator<GetQuestionsBloc>()..add(GetQuestionsEvent("hard"));
+    final bloc = locator<GetQuestionsBloc>()
+      ..add(GetQuestionsEvent(widget.params));
     List<QuestionBlock> questions = [];
     Widget content = Container();
     bool isLoading = false;

@@ -20,7 +20,7 @@ class ApiClient {
     switch (method) {
       case Method.GET:
         String link =
-            "https://quizapi.io/api/v1/questions?apiKey=$key&limit=10&difficulty=${params.difficulty}";
+            "https://quizapi.io/api/v1/questions?apiKey=$key&limit=10&difficulty=${params.difficulty}&category=${params.category}";
         return await _apiClient.get(link);
       case Method.POST:
         return await _apiClient.post(path ??
