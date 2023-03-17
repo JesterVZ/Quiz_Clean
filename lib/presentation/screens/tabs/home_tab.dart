@@ -60,6 +60,7 @@ class _HomeTab extends State<HomeTab> {
           child: Padding(
             padding: const EdgeInsets.only(left: 24, right: 24),
             child: GradientButton(
+                key: const Key('StartButton'),
                 height: 47,
                 borderRadius: BorderRadius.circular(63),
                 onPressed: () {

@@ -8,4 +8,4 @@ Color borderColor = const Color(0xFFF0F0F0);
 Color colorGray1 = const Color(0xFFD9D9D9);
 
 Color dropdownColor = const Color(0x421F4EEF);
-Color dropdownResultColor = const Color.fromARGB(66, 83, 123, 255);
+Color dropdownResultColor = const Color.fromARGB(255, 196, 210, 255);

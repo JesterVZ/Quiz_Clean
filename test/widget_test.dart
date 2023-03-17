@@ -1,30 +1,38 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:quiz_app/main.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_app/base/routes.dart';
+import 'package:quiz_app/domain/usecases/get_questions_usecase.dart';
+import 'package:quiz_app/presentation/screens/main_screen.dart';
+import 'package:quiz_app/presentation/screens/quiz_screen.dart';
+import 'package:quiz_app/presentation/widgets/routes/CustomPageRoute.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  testWidgets("click on button", (WidgetTester tester) async {
+    final button = find.byKey(ValueKey("StartButton"));
+    final navigatorKey = GlobalKey<NavigatorState>();
+    var page;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.pumpWidget(Provider(
+      create: (context) => navigatorKey,
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case routeHome:
+              page = MainPage();
+              return MaterialPageRoute<dynamic>(
+                  builder: (context) => page, settings: settings);
+            case routeQuiz:
+              page = QuizScreen(params: settings.arguments as Params);
+              return CustomPageRoute(page: page);
+          }
+          return null;
+        },
+      ),
+    ));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.tap(button);
     await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
   });
 }

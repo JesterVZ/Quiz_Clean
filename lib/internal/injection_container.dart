@@ -8,14 +8,21 @@ import 'package:quiz_app/domain/usecases/get_questions_usecase.dart';
 import 'package:quiz_app/presentation/bloc/get_questions/get_questions_bloc.dart';
 
 import '../base/http/HttpClient.dart';
+import '../data/datasources/internet_connection.dart';
 
 final locator = GetIt.instance;
 
 Future<void> startup() async {
-  locator.registerFactory(() => GetQuestionsBloc(getQuestionUseCase: locator()));
+  locator
+      .registerFactory(() => GetQuestionsBloc(getQuestionUseCase: locator()));
   locator.registerLazySingleton(() => GetQuestionUseCase(locator()));
-  locator.registerLazySingleton<GetQuestionsRepository>(() => GetQuestionRepositoryImpl(remoteDataSource: locator(), networkInfo: locator()));
-  locator.registerLazySingleton<QuestionRemoteDataSource>(() => QuestionRemoteDataSourceImpl(httpClient: locator()));
+  locator.registerLazySingleton<GetQuestionsRepository>(() =>
+      GetQuestionRepositoryImpl(
+          remoteDataSource: locator(), networkInfo: locator()));
+  locator.registerLazySingleton<QuestionRemoteDataSource>(
+      () => QuestionRemoteDataSourceImpl(httpClient: locator()));
+  locator.registerLazySingleton<InternetConnectionClient>(
+      () => InternetConnectionClientImpl(locator()));
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
   locator.registerLazySingleton<ApiClient>(() => ApiClient());
   locator.registerLazySingleton(() => InternetConnectionChecker());

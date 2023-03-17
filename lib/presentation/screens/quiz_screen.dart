@@ -90,6 +90,9 @@ class _QuizScreen extends State<QuizScreen> {
                         child: content,
                       )),
                       DotsIndicator(
+                        position: questionIndex.index.toDouble(),
+                        decorator:
+                            const DotsDecorator(activeColor: Colors.white),
                         dotsCount: 10,
                       )
                     ],

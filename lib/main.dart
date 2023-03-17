@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
                 page = QuizScreen(params: settings.arguments as Params);
                 return CustomPageRoute(page: page);
             }
+            return null;
 
             //return MaterialPageRoute<dynamic>(builder: (context) => page, settings: settings);
           },
